@@ -24,26 +24,28 @@ class DepartementServiceTests {
 	
 	@Test
 	public void testUpdateDepartement()  {
-		Departement savedDept = ds.updateDepartement(0,"IT2");
-		if(savedDept != null)  {			
-			assert savedDept.getName() == "IT2";
-		}
+		Departement dept = new Departement("IT");
+		Departement savedDept = ds.addDepartement(dept);
+		Departement updatedDept = ds.updateDepartement(savedDept.getId(),"IT2");
+		assert updatedDept.getName() == "IT2";
 	}
 	
 	@Test
 	public void testgetDepartement() {
-		 
-		Departement savedDept = ds.getDepartement(0);
-		if(savedDept != null) {
-			assert savedDept.getId() == 1;
-		}
+		Departement dept = new Departement("IT");
+		Departement savedDept = ds.addDepartement(dept);
+		Departement fetchedDept = ds.getDepartement(savedDept.getId());
+		assert fetchedDept.getName().equals("IT");
+		
 	}
 	
 	@Test
 	public void testDeleteDepartement() {
-		int deletedDeptId = ds.deleteDepartement(1);
-		Departement dept = ds.getDepartement(deletedDeptId);
-		assert dept == null;
+		Departement dept = new Departement("IT");
+		Departement savedDept = ds.addDepartement(dept);
+		int deletedDeptId = ds.deleteDepartement(savedDept.getId());
+		Departement fetchedDept = ds.getDepartement(deletedDeptId);
+		assert fetchedDept == null;
 	}
 
 }
